@@ -42,15 +42,23 @@
         return this.cords.yCartMin + (cartHeight * pxRatio);
     };
 
-    Fractal.prototype.draw = function () {
-        var imageData = this.drawToImageDataWASM();
+    Fractal.prototype.draw = function (mode) {
+        switch (mode){
+            case "naive_st":
+                this.drawToImageData();
+                break;
+            case "naive_ww":
+                this.drawToImageDataWorker();
+                break;
+            case "ww_wasm":
+                this.drawToImageDataWASM();
+                break;
+        }
     };
 
     Fractal.prototype.drawToImageData = function () {
         var imageData = new ImageData(this.canvas.width, this.canvas.height);
         var yCart, xCart, escapeTime, rgbNum, index;
-
-        var startTime = performance.now();
 
         for (var y = 0; y < imageData.height; y++) {
             yCart = this.pixelToCartY(y);
@@ -69,10 +77,8 @@
 
             }
         }
-        console.log(imageData);
-        var endTime = performance.now();
-        console.log(`Call to doSomething took ${endTime - startTime} milliseconds`);
         this.ctx.putImageData(imageData, 0, 0);
+        window.benchmark_end();
         return imageData;
     };
 
@@ -81,7 +87,6 @@
         var imageData = new ImageData(this.canvas.width, this.canvas.height);
         var yCart, xCart, escapeTime, rgbNum, index;
 
-        var startTime = performance.now();
         var arrlen = imageData.height * imageData.width * 4 + 1;
         var idx = 1;
         var arr = 0;
@@ -129,10 +134,7 @@
         imageData.data.set(Uint8ClampedArray.from(result));
         this.ctx.putImageData(imageData, 0, 0);
         Module._free(dataHeap.byteOffset);
-
-        console.log(imageData);
-        var endTime = performance.now();
-        console.log(`Call to doSomething took ${endTime - startTime} milliseconds`);
+        window.benchmark_end();
         return imageData;
     };
 
@@ -141,7 +143,6 @@
         var imageData = new ImageData(this.canvas.width, this.canvas.height);
         var yCart, xCart, escapeTime, rgbNum, index;
 
-        var startTime = performance.now();
         var arrlen = imageData.height * imageData.width * 4 + 1;
         var idx = 1;
         var arr = 0;
@@ -173,6 +174,7 @@
             }
         }
 
+        var self = this;
         var workeronmessage = function (e) {
             var result = e.data;
             var index = 0;
@@ -186,8 +188,8 @@
                 imageData.data[index + 2] = 0; //rgbNum[2];
                 imageData.data[index + 3] = 255;
             }
-            console.log(imageData);
-            this.ctx.putImageData(imageData, 0, 0);
+            self.ctx.putImageData(imageData, 0, 0);
+            window.benchmark_end();
         }
 
         var workerarr = []
@@ -198,11 +200,6 @@
         for (i = 0; i < this.threads; i++) {
             workerarr[i].postMessage(arrsbuffs[i], [arrsbuffs[i]]);
         }
-
-        console.log(imageData);
-        var endTime = performance.now();
-        console.log(`Call to doSomething took ${endTime - startTime} milliseconds`);
-
         return imageData;
     };
 
