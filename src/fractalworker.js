@@ -1,8 +1,8 @@
-var distFromOrigin = function(x, y){
+var distFromOrigin = function (x, y) {
     return Math.sqrt(x * x + y * y);
 };
 
-var calcEscapeTime = function(xCart, yCart, maxEscapeTime){
+var calcEscapeTime = function (xCart, yCart, maxEscapeTime) {
 
     var escapeTime = 0;
     var oldX = xCart;
@@ -22,7 +22,7 @@ var calcEscapeTime = function(xCart, yCart, maxEscapeTime){
     return escapeTime;
 };
 
-calRgbNum = function(escapeTime, maxEscapeTime){
+calRgbNum = function (escapeTime, maxEscapeTime) {
     if (escapeTime <= 2) {
         return [0, 0, 0];
     } else if (escapeTime === maxEscapeTime) {
@@ -78,15 +78,15 @@ calRgbNum = function(escapeTime, maxEscapeTime){
 };
 
 
-onmessage = function(e) {
+onmessage = function (e) {
     // console.log('Message received from main script'+ JSON.stringify(e.data));
     input_arr = new Float32Array(e.data)
     output_arr = []
     // console.log(e.data.input_arr);
     var maxEscapeTime = input_arr[0];
-    for(var i=1; i< input_arr.length; i+=4){
-        var input = [input_arr[i], input_arr[i+1], input_arr[i+2], input_arr[i+3]];
-        output_arr.push([input[0], input[1],calRgbNum(calcEscapeTime(input[2], input[3], maxEscapeTime), maxEscapeTime)])
+    for (var i = 1; i < input_arr.length; i += 4) {
+        var input = [input_arr[i], input_arr[i + 1], input_arr[i + 2], input_arr[i + 3]];
+        output_arr.push([input[0], input[1], calRgbNum(calcEscapeTime(input[2], input[3], maxEscapeTime), maxEscapeTime)])
     }
     postMessage(output_arr);
 }
