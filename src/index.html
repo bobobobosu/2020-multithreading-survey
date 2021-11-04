@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<label for="impl">Choose an implementation:</label>
+<select name="impl" id="impl">
+    <option value="naive_st">Naive Single thread</option>
+    <option value="naive_ww">Naive Web worker</option>
+    <option value="ww_wasm">Web Worker + WASM</option>
+    <option value="jsdom_ww">JSDom + Web worker</option>
+    <option value="linkedom_ww">LinkeDOM + Web worker</option>
+    <option value="workerdom">Worker Dom</option>
+    <option value="workerdom_wasm">Worker Dom + WASM</option>
+    <option value="neo">Neo</option>
+</select>
+
+<label for="presentation">Choose a presentation:</label>
+<select name="presentation" id="presentation">
+    <option value="single_fractal">Single Fractal Canvas</option>
+    <option value="fractal_list">Multiple Fractal Canvas</option>
+    <option value="fractal_nested">Nested Fractal Canvas</option>
+</select>
+
+<label for="renderer">Choose a Canvas renderer:</label>
+<select name="renderer" id="renderer">
+    <option value="canvas2d">Canvas 2D</option>
+    <option value="webgl">WebGL</option>
+    <option value="offscreencanvas">Offscreen Canvas</option>
+</select>
+
+<label for="numthreads">Number of Threads:</label>
+<select name="numthreads" id="numthreads">
+    <option value=1>1</option>
+    <option value=2>2</option>
+    <option value=3>3</option>
+    <option value=4>4</option>
+    <option value=5>5</option>
+    <option value=6>6</option>
+    <option value=7>7</option>
+    <option value=8>8</option>
+</select>
+
+<label for="numfractals">Number of Fractals:</label>
+<select name="numfractals" id="numfractals">
+    <option value=1>1</option>
+    <option value=10>10</option>
+    <option value=100>100</option>
+    <option value=1000>1000</option>
+</select>
+
+<button type="button" id="refreshbtn">Refresh and Time!</button>
+<p id="Time Completion">null</p>
+
+
+<div id="fractal-graphics">
+    <canvas id="fractal-canvas"></canvas>
+</div>
+
+<script async type="text/javascript" src="hello3.js"></script>
+<script type="text/javascript" src="fractalworker.js">worker</script>
+<script type="text/javascript" src="fractal.js">fractal</script>
+<script type="text/javascript" src="app.js">app</script>
+</body>\
+</html>
