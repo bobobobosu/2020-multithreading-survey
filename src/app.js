@@ -40,6 +40,9 @@
         var impl = ele.options[ele.selectedIndex].value;
         ele = document.getElementById("presentation");
         var presentation = ele.options[ele.selectedIndex].value;
+        ele = document.getElementById("fracwidth");
+        var fracwidth = ele.options[ele.selectedIndex].value;
+        var fracheight = fracwidth * 24/29
 
         var arr = [];
         var i;
@@ -66,19 +69,25 @@
             case "naive_st":
                 window.benchmark_start(numele);
                 for (i = 0; i < arr.length; i++) {
-                    calc(arr[i], 290, 240, -1, "naive_st");
+                    calc(arr[i], fracwidth, fracheight, -1, "naive_st");
                 }
                 break;
             case "naive_ww":
                 window.benchmark_start(numele * numthreads);
                 for (i = 0; i < arr.length; i++) {
-                    calc(arr[i], 290, 240, numthreads, "naive_ww");
+                    calc(arr[i], fracwidth, fracheight, numthreads, "naive_ww");
                 }
                 break;
             case "ww_wasm":
                 window.benchmark_start(numele);
                 for (i = 0; i < arr.length; i++) {
-                    calc(arr[i], 290, 240, numthreads, "ww_wasm");
+                    calc(arr[i], fracwidth, fracheight, numthreads, "ww_wasm");
+                }
+                break;
+            case "ww_offscreen":
+                window.benchmark_start(numele);
+                for (i = 0; i < arr.length; i++) {
+                    calc(arr[i], fracwidth, fracheight, numthreads, "ww_offscreen");
                 }
                 break;
         }

@@ -8,13 +8,13 @@
 
 <label for="impl">Choose an implementation:</label>
 <select name="impl" id="impl">
-    <option value="naive_st">Naive Single thread</option>
-    <option value="naive_ww">Naive Web worker</option>
-    <option value="ww_wasm">Web Worker + WASM</option>
-    <option value="jsdom_ww">JSDom + Web worker</option>
-    <option value="linkedom_ww">LinkeDOM + Web worker</option>
-    <option value="workerdom">Worker Dom</option>
-    <option value="workerdom_wasm">Worker Dom + WASM</option>
+    <option value="naive_st">Naive Single thread (single thread everything)</option>
+    <option value="naive_ww">Naive Web worker (n threads for each canvas)</option>
+    <option value="ww_wasm">Web Worker + WASM (n threads for each canvas)</option>
+    <option value="ww_offscreen">Web Worker + Async Offscreen Canvas (each canvas get 1 thread)</option>
+    <option value="workerdom">Worker Dom (each canvas get n thread)</option>
+    <option value="workerdom_wasm">Worker Dom + WASM (each canvas get n thread)</option>
+    <option value="workerdom_offscreen">Worker Dom + Async Offscreen Canvas (each canvas get 1 thread)</option>
     <option value="neo">Neo</option>
 </select>
 
@@ -23,13 +23,6 @@
     <option value="single_fractal">Single Fractal Canvas</option>
     <option value="fractal_list">Multiple Fractal Canvas</option>
     <option value="fractal_nested">Nested Fractal Canvas</option>
-</select>
-
-<label for="renderer">Choose a Canvas renderer:</label>
-<select name="renderer" id="renderer">
-    <option value="canvas2d">Canvas 2D</option>
-    <option value="webgl">WebGL</option>
-    <option value="offscreencanvas">Offscreen Canvas</option>
 </select>
 
 <label for="numthreads">Number of Threads:</label>
@@ -50,6 +43,14 @@
     <option value=10>10</option>
     <option value=100>100</option>
     <option value=1000>1000</option>
+</select>
+
+<label for="fracwidth">Width of Fractals:</label>
+<select name="fracwidth" id="fracwidth">
+    <option value=10>10</option>
+    <option value=100>100</option>
+    <option value=1000>1000</option>
+    <option value=10000>10000</option>
 </select>
 
 <button type="button" id="refreshbtn">Refresh and Time!</button>

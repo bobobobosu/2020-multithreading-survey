@@ -11,7 +11,6 @@
 
     function Fractal(canvas) {
         this.canvas = canvas;
-        this.ctx = canvas.getContext("2d");
         this.cords = {};
         this.maxEscapeTime = 224;
     }
@@ -53,10 +52,23 @@
             case "ww_wasm":
                 this.drawToImageDataWASM();
                 break;
+            case "ww_offscreen":
+                this.drawToImageDataOffscreen();
+                break;
         }
     };
 
+    Fractal.prototype.drawToImageDataOffscreen = function () {
+        var offscreen = this.canvas.transferControlToOffscreen();
+        const worker = new Worker('./fractaloffscreenworker.js');
+        worker.postMessage({ canvas: offscreen, cords: this.cords, maxEscapeTime: this.maxEscapeTime}, [offscreen]);
+        worker.onmessage = function (e) {
+            window.benchmark_end();
+        };
+    };
+
     Fractal.prototype.drawToImageData = function () {
+        var ctx = this.canvas.getContext("2d");
         var imageData = new ImageData(this.canvas.width, this.canvas.height);
         var yCart, xCart, escapeTime, rgbNum, index;
 
@@ -77,13 +89,14 @@
 
             }
         }
-        this.ctx.putImageData(imageData, 0, 0);
+        ctx.putImageData(imageData, 0, 0);
         window.benchmark_end();
         return imageData;
     };
 
 
     Fractal.prototype.drawToImageDataWASM = function () {
+        var ctx = this.canvas.getContext("2d");
         var imageData = new ImageData(this.canvas.width, this.canvas.height);
         var yCart, xCart, escapeTime, rgbNum, index;
 
@@ -127,12 +140,12 @@
         dataHeap.set(new Uint8Array(data.buffer));
 
 // Call function and get result
-        Module.ccall('myFunction', 'number', ['number', 'number'], [data.length, dataHeap.byteOffset]);
+        Module.ccall('myFunction', 'number', ['number', 'number', 'number'], [data.length, dataHeap.byteOffset, this.threads]);
         var result = new Float32Array(dataHeap.buffer, dataHeap.byteOffset + data.BYTES_PER_ELEMENT, data.length - 1); // remove first
 
 // Free memory
         imageData.data.set(Uint8ClampedArray.from(result));
-        this.ctx.putImageData(imageData, 0, 0);
+        ctx.putImageData(imageData, 0, 0);
         Module._free(dataHeap.byteOffset);
         window.benchmark_end();
         return imageData;
@@ -140,6 +153,7 @@
 
 
     Fractal.prototype.drawToImageDataWorker = function () {
+        var ctx = this.canvas.getContext("2d");
         var imageData = new ImageData(this.canvas.width, this.canvas.height);
         var yCart, xCart, escapeTime, rgbNum, index;
 
@@ -174,7 +188,6 @@
             }
         }
 
-        var self = this;
         var workeronmessage = function (e) {
             var result = e.data;
             var index = 0;
@@ -188,7 +201,7 @@
                 imageData.data[index + 2] = 0; //rgbNum[2];
                 imageData.data[index + 3] = 255;
             }
-            self.ctx.putImageData(imageData, 0, 0);
+            ctx.putImageData(imageData, 0, 0);
             window.benchmark_end();
         }
 
