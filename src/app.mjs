@@ -1,3 +1,6 @@
+import {upgradeElement} from './dist/main.mjs';
+window.workerpath = "http://localhost:63342/final/src/fractalworker.js";
+
 // https://github.com/rafgraph/fractal
 // this code may be freely distributed under the GNU GPL v3 copyleft licence
 
@@ -27,6 +30,7 @@
 
     document.getElementById("refreshbtn").addEventListener("click", function () {
         // cleanup
+        var workerdomele = document.getElementById("upgrade-fractal");
         var graphics = document.getElementById("fractal-graphics");
         graphics.innerHTML = "";
 
@@ -43,6 +47,15 @@
         ele = document.getElementById("fracwidth");
         var fracwidth = ele.options[ele.selectedIndex].value;
         var fracheight = fracwidth * 24/29
+
+        graphics.textContent = JSON.stringify({
+            numthreads: numthreads,
+            numele: numele,
+            impl: impl,
+            presentation: presentation,
+            fracwidth: fracwidth,
+            fracheight: fracheight,
+        })
 
         var arr = [];
         var i;
@@ -89,6 +102,12 @@
                 for (i = 0; i < arr.length; i++) {
                     calc(arr[i], fracwidth, fracheight, numthreads, "ww_offscreen");
                 }
+                break;
+            case "workerdom":
+                upgradeElement(workerdomele, './dist/worker/worker.mjs');
+                break;
+            case "workerdom_ww":
+                upgradeElement(workerdomele, './dist/worker/worker.mjs');
                 break;
         }
 

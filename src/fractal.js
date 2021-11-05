@@ -207,7 +207,7 @@
 
         var workerarr = []
         for (i = 0; i < this.threads; i++) {
-            workerarr.push(new Worker('./fractalworker.js'))
+            workerarr.push(new Worker(window.workerpath))
             workerarr[i].onmessage = workeronmessage;
         }
         for (i = 0; i < this.threads; i++) {

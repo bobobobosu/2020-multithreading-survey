@@ -5,17 +5,14 @@
     <title>Title</title>
 </head>
 <body>
-
 <label for="impl">Choose an implementation:</label>
 <select name="impl" id="impl">
     <option value="naive_st">Naive Single thread (single thread everything)</option>
     <option value="naive_ww">Naive Web worker (n threads for each canvas)</option>
     <option value="ww_wasm">Web Worker + WASM (n threads for each canvas)</option>
     <option value="ww_offscreen">Web Worker + Async Offscreen Canvas (each canvas get 1 thread)</option>
-    <option value="workerdom">Worker Dom (each canvas get n thread)</option>
-    <option value="workerdom_wasm">Worker Dom + WASM (each canvas get n thread)</option>
-    <option value="workerdom_offscreen">Worker Dom + Async Offscreen Canvas (each canvas get 1 thread)</option>
-    <option value="neo">Neo</option>
+    <option value="workerdom">Worker Dom (1 background thread for fractal DOM)</option>
+    <option value="workerdom_ww">Worker Dom Worker (1xn thread for fractal DOM)</option>
 </select>
 
 <label for="presentation">Choose a presentation:</label>
@@ -57,12 +54,15 @@
 <p id="time_completion">null</p>
 
 
-<div id="fractal-graphics">
+<div src="workerdomworker.js" id="upgrade-fractal">
+    <div id="fractal-graphics">
+    </div>
 </div>
+
 
 <script async type="text/javascript" src="hello3.js"></script>
 <script type="text/javascript" src="fractalworker.js">worker</script>
 <script type="text/javascript" src="fractal.js">fractal</script>
-<script type="text/javascript" src="app.js">app</script>
+<script type="module" src="app.mjs"></script>
 </body>
 </html>
