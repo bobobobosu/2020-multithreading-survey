@@ -2,62 +2,79 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="index.css">
     <title>Title</title>
 </head>
 <body>
 
+<div class="control">
+    <div>
+        <canvas id="canvas-window" width="120" height="120"></canvas>
+        <script src="animation.js"></script>
+    </div>
 
-<canvas id="canvas-window" width="400" height="200"></canvas>
-<script src="animation.js"></script>
+    <div>
+        <label for="impl">Choose an implementation:</label>
+        <select name="impl" id="impl">
+            <option value="naive_st">Naive Single thread (single thread everything)</option>
+            <option value="naive_ww">Naive Web worker (n threads for each canvas)</option>
+            <option value="ww_wasm">Web Worker + WASM (n threads for each canvas)</option>
+            <option value="ww_offscreen">Web Worker + Async Offscreen Canvas (each canvas get 1 thread)</option>
+            <option value="workerdom">Worker Dom (1 background thread for fractal DOM)</option>
+            <option value="workerdom_ww">Worker Dom Worker (1xn thread for fractal DOM)</option>
+        </select>
+        <br/>
 
-<label for="impl">Choose an implementation:</label>
-<select name="impl" id="impl">
-    <option value="naive_st">Naive Single thread (single thread everything)</option>
-    <option value="naive_ww">Naive Web worker (n threads for each canvas)</option>
-    <option value="ww_wasm">Web Worker + WASM (n threads for each canvas)</option>
-    <option value="ww_offscreen">Web Worker + Async Offscreen Canvas (each canvas get 1 thread)</option>
-    <option value="workerdom">Worker Dom (1 background thread for fractal DOM)</option>
-    <option value="workerdom_ww">Worker Dom Worker (1xn thread for fractal DOM)</option>
-</select>
+        <label for="presentation">Choose a presentation:</label>
+        <select name="presentation" id="presentation">
+            <option value="single_fractal">Single Fractal Canvas</option>
+            <option value="fractal_list">Multiple Fractal Canvas</option>
+            <option value="fractal_nested">Nested Fractal Canvas</option>
+        </select>
+        <br/>
 
-<label for="presentation">Choose a presentation:</label>
-<select name="presentation" id="presentation">
-    <option value="single_fractal">Single Fractal Canvas</option>
-    <option value="fractal_list">Multiple Fractal Canvas</option>
-    <option value="fractal_nested">Nested Fractal Canvas</option>
-</select>
+        <label for="numthreads">Number of Threads:</label>
+        <select name="numthreads" id="numthreads">
+            <option value=1>1</option>
+            <option value=2>2</option>
+            <option value=3>3</option>
+            <option value=4>4</option>
+            <option value=5>5</option>
+            <option value=6>6</option>
+            <option value=7>7</option>
+            <option value=8>8</option>
+        </select>
 
-<label for="numthreads">Number of Threads:</label>
-<select name="numthreads" id="numthreads">
-    <option value=1>1</option>
-    <option value=2>2</option>
-    <option value=3>3</option>
-    <option value=4>4</option>
-    <option value=5>5</option>
-    <option value=6>6</option>
-    <option value=7>7</option>
-    <option value=8>8</option>
-</select>
+        <label for="numfractals">Number of Fractals:</label>
+        <select name="numfractals" id="numfractals">
+            <option value=1>1</option>
+            <option value=10>10</option>
+            <option value=100>100</option>
+            <option value=100>200</option>
+            <option value=100>400</option>
+            <option value=100>800</option>
+            <option value=1000>1000</option>
+        </select>
 
-<label for="numfractals">Number of Fractals:</label>
-<select name="numfractals" id="numfractals">
-    <option value=1>1</option>
-    <option value=10>10</option>
-    <option value=100>100</option>
-    <option value=1000>1000</option>
-</select>
+        <label for="fracwidth">Width of Fractals:</label>
+        <select name="fracwidth" id="fracwidth">
+            <option value=10>10</option>
+            <option value=100>100</option>
+            <option value=1000>1000</option>
+            <option value=1000>2000</option>
+            <option value=1000>4000</option>
+            <option value=1000>8000</option>
+            <option value=10000>10000</option>
+        </select>
+    </div>
 
-<label for="fracwidth">Width of Fractals:</label>
-<select name="fracwidth" id="fracwidth">
-    <option value=10>10</option>
-    <option value=100>100</option>
-    <option value=1000>1000</option>
-    <option value=10000>10000</option>
-</select>
+    <button type="button" id="refreshbtn">Refresh and Time!</button>
+</div>
 
-<button type="button" id="refreshbtn">Refresh and Time!</button>
+
+
 <p id="time_completion">null</p>
-
+<br/>
 
 <div src="workerdomworker.js" id="upgrade-fractal">
     <div id="fractal-graphics">

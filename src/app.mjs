@@ -59,6 +59,7 @@ window.workerpath = "http://localhost:63342/final/src/fractalworker.js";
             fracwidth: fracwidth,
             fracheight: fracheight,
         })
+        graphics.appendChild(document.createElement("br"))
 
         var arr = [];
         var i;
