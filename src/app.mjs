@@ -1,5 +1,5 @@
 import {upgradeElement} from './dist/main.mjs';
-window.workerpath = "http://localhost:63342/final/src/fractalworker.js";
+window.workerpath = "https://multithreading-demo.bobobobobobo.net/fractal.js/fractalworker.js"
 
 // https://github.com/rafgraph/fractal
 // this code may be freely distributed under the GNU GPL v3 copyleft licence
