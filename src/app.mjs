@@ -7,6 +7,9 @@ window.workerpath = "http://localhost:63342/final/src/fractalworker.js";
 (function () {
     'use strict';
 
+    const animationWindow = new Animation(document.querySelector('#canvas-window').getContext('2d'));
+    animationWindow.start();
+
     function calc(canv, width, height, numthread, mode) {
         var frac = new window.mandelbrotFractal.Fractal(canv);
         frac.updateFractalSize(width, height);
@@ -75,6 +78,15 @@ window.workerpath = "http://localhost:63342/final/src/fractalworker.js";
                 }
                 break
             case "fractal_nested":
+                var t = graphics
+                for (i = 0; i < numele; i++) {
+                    canv = document.createElement('canvas');
+                    let div = document.createElement('div');
+                    div.appendChild(canv);
+                    t.appendChild(div);
+                    t = div
+                    arr.push(canv);
+                }
                 break
         }
 

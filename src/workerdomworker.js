@@ -58,6 +58,15 @@ switch (presentation){
         }
         break
     case "fractal_nested":
+        var t = graphics
+        for (i = 0; i < numele; i++) {
+            canv = document.createElement('canvas');
+            let div = document.createElement('div');
+            div.appendChild(canv);
+            t.appendChild(div);
+            t = div
+            arr.push(canv);
+        }
         break
 }
 
