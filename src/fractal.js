@@ -189,15 +189,14 @@
         }
 
         var workeronmessage = function (e) {
-            var result = e.data;
+            var result = new Float32Array(e.data);
             var index = 0;
-            for (var idx = 0; idx < result.length; idx++) {
-                var x = result[idx][0];
-                var y = result[idx][1];
+            for (var idx = 1; idx < result.length; idx+=4) {
+                var x = result[idx];
+                var y = result[idx+1];
                 index = (y * imageData.width + x) * 4;
-                var rgbNum = result[idx][2];
-                imageData.data[index] = rgbNum[0];
-                imageData.data[index + 1] = rgbNum[1];
+                imageData.data[index] = result[idx+2];
+                imageData.data[index + 1] = result[idx+3];
                 imageData.data[index + 2] = 0; //rgbNum[2];
                 imageData.data[index + 3] = 255;
             }

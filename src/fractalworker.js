@@ -81,12 +81,16 @@ calRgbNum = function (escapeTime, maxEscapeTime) {
 onmessage = function (e) {
     // console.log('Message received from main script'+ JSON.stringify(e.data));
     input_arr = new Float32Array(e.data)
-    output_arr = []
+    output_arr = new Float32Array(input_arr.length)
     // console.log(e.data.input_arr);
     var maxEscapeTime = input_arr[0];
     for (var i = 1; i < input_arr.length; i += 4) {
         var input = [input_arr[i], input_arr[i + 1], input_arr[i + 2], input_arr[i + 3]];
-        output_arr.push([input[0], input[1], calRgbNum(calcEscapeTime(input[2], input[3], maxEscapeTime), maxEscapeTime)])
+        var rgbnum = calRgbNum(calcEscapeTime(input[2], input[3], maxEscapeTime), maxEscapeTime)
+        output_arr[i] = input[0]
+        output_arr[i+1] = input[1]
+        output_arr[i+2] = rgbnum[0]
+        output_arr[i+3] = rgbnum[1]
     }
-    postMessage(output_arr);
+    postMessage(output_arr.buffer, [output_arr.buffer]);
 }
