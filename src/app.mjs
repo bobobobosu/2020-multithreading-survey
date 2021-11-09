@@ -122,6 +122,26 @@ window.workerpath = "http://localhost:63342/final/src/fractalworker.js";
             case "workerdom_ww":
                 upgradeElement(workerdomele, './dist/worker/worker.mjs');
                 break;
+            case "workerdom_ww_multi":
+                var s = ""
+                for(i=0;i<numele;i++){
+                    s += `<div src="workerdomworkerfixed.js" id="upgrade-fractal-fixed-${i}"><div id="fractal-fixed"></div></div>`
+                }
+                document.getElementById("fractal-graphics").innerHTML = s;
+                for(i=0;i<numele;i++){
+                    let e = document.getElementById("upgrade-fractal-fixed-" + i.toString());
+                    e.childNodes[0].textContent = JSON.stringify({
+                        numthreads: numthreads,
+                        numele: numele,
+                        impl: impl,
+                        presentation: presentation,
+                        fracwidth: fracwidth,
+                        fracheight: fracheight,
+                    });
+                    e.childNodes[0].appendChild(document.createElement("br"));
+                    upgradeElement(e, './dist/worker/worker.mjs');
+                }
+                break;
         }
 
 
