@@ -122,7 +122,7 @@ window.workerpath = "http://localhost:63342/final/src/fractalworker.js";
             case "workerdom_ww":
                 upgradeElement(workerdomele, './dist/worker/worker.mjs');
                 break;
-            case "workerdom_ww_multi":
+            case "workerdom_ww_kx1":
                 var s = ""
                 for(i=0;i<numele;i++){
                     s += `<div src="workerdomworkerfixed.js" id="upgrade-fractal-fixed-${i}"><div id="fractal-fixed"></div></div>`

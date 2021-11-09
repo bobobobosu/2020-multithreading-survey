@@ -44,8 +44,8 @@ graphics.appendChild(canv);
 
 // run
 switch (impl){
-    case "workerdom_ww_multi":
+    case "workerdom_ww_kx1":
         window.benchmark_start(numthreads);
-        calc(canv, fracwidth, fracheight, numthreads, "naive_ww");
+        calc(canv, fracwidth, fracheight, numthreads, "naive_st");
         break;
 }
