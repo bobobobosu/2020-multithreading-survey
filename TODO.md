@@ -16,3 +16,5 @@
 
 # Num fractals
 - 1~100
+  
+- python3 -m http.server --bind 0.0.0.0 --directory /root/2021-multithreading-survey/src 8080

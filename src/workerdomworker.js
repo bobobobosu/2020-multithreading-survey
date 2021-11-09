@@ -1,5 +1,5 @@
-importScripts("http://localhost:63342/final/src/fractal.js");
-window.workerpath = "http://localhost:63342/final/src/fractalworker.js"
+importScripts("http://multithreading-demo.bobobobobobo.net/fractal.js");
+window.workerpath = "http://multithreading-demo.bobobobobobo.net/fractal.js/fractalworker.js"
 
 function calc(canv, width, height, numthread, mode) {
     var frac = new window.mandelbrotFractal.Fractal(canv);
